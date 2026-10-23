@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORLCORE MUSEUM | 3D NFT Gallery</title>
+<style>
+:root{--gold:#d7b45a;--gold2:#f4df9b;--bg:#080909;--panel:#111311;--muted:#a7a79d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f6f2e8;font-family:Inter,Arial,sans-serif}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 5%;background:#080909eF;border-bottom:1px solid #d7b45a44;backdrop-filter:blur(14px)}
+.brand{font-weight:900;letter-spacing:2px;color:var(--gold2)}.brand small{display:block;font-size:9px;letter-spacing:4px;color:#aaa;margin-top:4px}
+nav{display:flex;gap:22px;align-items:center}a{color:#eee;text-decoration:none}nav a:hover{color:var(--gold)}
+button{cursor:pointer;border:1px solid var(--gold);background:var(--gold);color:#15120a;padding:11px 16px;font-weight:800;border-radius:4px}button.secondary{background:transparent;color:var(--gold)}
+.hero{min-height:76vh;padding:70px 5% 55px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;overflow:hidden;background:radial-gradient(ellipse at 70% 50%,#5c461c35,transparent 55%)}
+.eyebrow{color:var(--gold);letter-spacing:4px;font-size:11px;font-weight:bold}.hero h1{font-size:clamp(42px,6vw,82px);line-height:.98;margin:18px 0}.hero h1 span{color:var(--gold)}.hero p{color:#c2c0b5;max-width:520px;line-height:1.8}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.scene{height:390px;perspective:1000px;display:grid;place-items:center;position:relative}
+.cube{position:relative;width:240px;height:240px;transform-style:preserve-3d;animation:spin 18s linear infinite}
+.face{position:absolute;inset:0;border:1px solid #e3c56b99;background:linear-gradient(135deg,#a9822b44,#0d0d0d 55%,#c49b3d33);display:grid;place-items:center;box-shadow:inset 0 0 50px #c7a13a20,0 0 30px #c7a13a18}
+.face span{font-size:85px;filter:drop-shadow(0 0 18px #d7b45a55)}
+.front{transform:translateZ(120px)}.back{transform:rotateY(180deg) translateZ(120px)}.right{transform:rotateY(90deg) translateZ(120px)}.left{transform:rotateY(-90deg) translateZ(120px)}.top{transform:rotateX(90deg) translateZ(120px)}.bottom{transform:rotateX(-90deg) translateZ(120px)}
+@keyframes spin{from{transform:rotateX(-12deg) rotateY(0)}to{transform:rotateX(-12deg) rotateY(360deg)}}
+.scene:before,.scene:after{content:"";position:absolute;border:1px solid #d7b45a30;border-radius:50%;width:330px;height:90px;transform:rotate(-25deg)}.scene:after{transform:rotate(35deg);width:360px}
+section{padding:68px 5%}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font-size:clamp(28px,4vw,44px);margin:8px 0}.muted{color:var(--muted)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}.controls input,.controls select{background:#121411;color:#eee;border:1px solid #5b4b25;padding:12px;border-radius:4px;min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.card{background:linear-gradient(180deg,#171813,#0d0e0c);border:1px solid #d7b45a2b;border-radius:7px;overflow:hidden;transition:.25s}.card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 15px 35px #0008}
+.art{height:215px;display:grid;place-items:center;font-size:76px;position:relative;background:radial-gradient(circle at 50% 40%,#b28a3333,transparent 55%),linear-gradient(135deg,#1b1b16,#080909)}
+.art:after{content:"";position:absolute;inset:13px;border:1px solid #d7b45a55;pointer-events:none}.card-content{padding:17px}.tag{font-size:10px;letter-spacing:2px;color:var(--gold)}.card h3{margin:8px 0}.price-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:16px}.price{color:var(--gold2);font-weight:800}.card button{padding:9px 12px;font-size:12px}
+.experience{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;background:#11120f;border-top:1px solid #d7b45a35;border-bottom:1px solid #d7b45a35}.experience h2{font-size:clamp(28px,4vw,46px)}.mini-room{height:270px;perspective:800px;display:grid;place-items:center;background:radial-gradient(ellipse,#54401b55,transparent 65%)}.room{width:240px;height:160px;position:relative;transform-style:preserve-3d;transform:rotateX(-12deg) rotateY(-25deg)}.wall{position:absolute;inset:0;border:2px solid var(--gold);background:#191810;display:grid;place-items:center;font-size:60px;box-shadow:0 0 35px #d7b45a20}.wall.one{transform:translateZ(65px)}.wall.two{transform:rotateY(90deg) translateZ(120px);width:130px}.wall.three{transform:rotateY(-90deg) translateZ(120px);width:130px}
+footer{padding:30px 5%;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#a9a79c;border-top:1px solid #d7b45a30;font-size:13px}
+.modal{position:fixed;inset:0;z-index:50;background:#000c;display:none;place-items:center;padding:20px}.modal.open{display:grid}.modal-box{max-width:460px;width:100%;background:#11130f;border:1px solid var(--gold);padding:26px;position:relative}.close{position:absolute;right:14px;top:14px;background:transparent;color:#fff;border:0;font-size:22px;padding:3px}.modal-art{height:180px;display:grid;place-items:center;font-size:80px;background:#1a1912;margin:16px 0}
+.toast{position:fixed;bottom:20px;right:20px;background:#191a14;border:1px solid var(--gold);padding:14px 18px;z-index:60;display:none;max-width:330px}.toast.show{display:block}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:1fr}.scene{height:320px}.experience{grid-template-columns:1fr}nav{gap:12px}}
+@media(max-width:560px){header{padding:14px 4%}nav a{display:none}.hero,section{padding:48px 5%}.grid{grid-template-columns:1fr}.art{height:245px}.cube{transform:scale(.8);}.scene{height:280px}.section-head{align-items:start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="#home">WORLCORE <small>MUSEUM • DIGITAL ARTIFACTS</small></a>
+  <nav><a href="#gallery">Gallery</a><a href="#experience">3D Experience</a><a href="#about">About</a><button id="walletBtn" class="secondary">Connect Wallet</button></nav>
+</header>
+<main>
+<section class="hero" id="home">
+  <div>
+    <div class="eyebrow">A NEW ERA OF DIGITAL HERITAGE</div>
+    <h1>History, Reimagined<br><span>in 3D.</span></h1>
+    <p>Explore a virtual museum where ancient inspiration meets digital art. Discover collectible artworks, enter immersive galleries, and experience culture in a new dimension.</p>
+    <div class="actions"><a href="#gallery"><button>Explore Collection ↗</button></a><a href="#experience"><button class="secondary">Enter 3D Museum</button></a></div>
+    <p class="muted" style="font-size:12px">DEMO EXPERIENCE · Sample NFT listings · No purchase required</p>
+  </div>
+  <div class="scene" aria-label="Rotating 3D gold museum artifact">
+    <div class="cube" id="cube">
+      <div class="face front"><span>🏺</span></div><div class="face back"><span>𓂀</span></div>
+      <div class="face right"><span>🗿</span></div><div class="face left"><span>🏛️</span></div>
+      <div class="face top"><span>✦</span></div><div class="face bottom"><span>✧</span></div>
+    </div>
+  </div>
+</section>
+<section id="gallery">
+  <div class="section-head"><div><div class="eyebrow">THE DIGITAL COLLECTION</div><h2>Featured NFT Artifacts</h2><div class="muted">A curated demo collection inspired by history and mythology.</div></div></div>
+  <div class="controls"><input id="search" type="search" placeholder="Search artifacts..." aria-label="Search artifacts"><select id="category" aria-label="Filter category"><option value="all">All categories</option><option value="Ancient">Ancient</option><option value="Mythology">Mythology</option><option value="Architecture">Architecture</option><option value="Cosmic">Cosmic</option></select></div>
+  <div class="grid" id="galleryGrid"></div>
+</section>
+<section class="experience" id="experience">
+  <div><div class="eyebrow">IMMERSIVE EXHIBITION</div><h2>Step inside a digital world.</h2><p class="muted" style="line-height:1.8">Move around the exhibit, rotate the showcase, and discover a gallery built for the next generation of collectors. This lightweight demo uses CSS 3D effects and works without a 3D engine.</p><div class="actions"><button id="rotateBtn">Pause 3D Rotation</button><button class="secondary" id="resetBtn">Reset View</button></div></div>
+  <div class="mini-room"><div class="room"><div class="wall one">🏺</div><div class="wall two">𓂀</div><div class="wall three">🗿</div></div></div>
+</section>
+<section id="about">
+  <div class="eyebrow">ABOUT WORLCORE</div><h2>Preserving wonder. Exploring the future.</h2>
+  <p class="muted" style="max-width:760px;line-height:1.9">WORLCORE MUSEUM is a concept for a digital museum celebrating history, artifacts, and creative imagination. This prototype demonstrates a possible NFT gallery experience. Artwork names, visuals, and prices are illustrative placeholders, not verified historical artifacts or live offers.</p>
+</section>
+</main>
+<footer><span>© <span id="year"></span> WORLCORE MUSEUM</span><span>Black & Gold · 3D NFT Museum Demo</span><a href="#home">Back to top ↑</a></footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-box"><button class="close" id="closeModal" aria-label="Close">×</button><div class="eyebrow">COLLECTOR DETAILS · DEMO</div><div class="modal-art" id="modalArt">🏺</div><h2 id="modalTitle">Artifact</h2><p class="muted" id="modalDescription"></p><div class="price-row"><span class="price" id="modalPrice"></span><span class="muted">Illustrative price only</span></div><p class="muted" style="font-size:12px;line-height:1.6">This demo does not sell, mint, or transfer NFTs. Connect a properly configured smart contract and marketplace before enabling real transactions.</p><button id="modalOk">Got it</button></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const artifacts=[
+{id:1,name:"Golden Pharaoh",category:"Ancient",emoji:"👑",price:"0.45 ETH",description:"A digital tribute to royal artistry and ancient civilizations."},
+{id:2,name:"Oracle of the Moon",category:"Mythology",emoji:"🌙",price:"0.32 ETH",description:"A mythical-inspired collectible built around lunar symbolism."},
+{id:3,name:"Temple of Time",category:"Architecture",emoji:"🏛️",price:"0.60 ETH",description:"A virtual monument celebrating monumental architecture."},
+{id:4,name:"Celestial Relic",category:"Cosmic",emoji:"💫",price:"0.28 ETH",description:"A fictional cosmic artifact from an imagined digital universe."},
+{id:5,name:"The Bronze Guardian",category:"Ancient",emoji:"🗿",price:"0.39 ETH",description:"A stylized guardian inspired by sculptural heritage."},
+{id:6,name:"Sphinx of Secrets",category:"Mythology",emoji:"𓂀",price:"0.52 ETH",description:"A mysterious, mythology-inspired digital collectible."},
+{id:7,name:"Golden Atrium",category:"Architecture",emoji:"🏺",price:"0.75 ETH",description:"An imagined gallery space finished in virtual gold."},
+{id:8,name:"Stardust Archive",category:"Cosmic",emoji:"✨",price:"0.25 ETH",description:"A collectible celebrating the mystery of the cosmos."}
+];
+const grid=document.getElementById("galleryGrid"),search=document.getElementById("search"),category=document.getElementById("category");
+function render(){
+ const q=search.value.toLowerCase(),cat=category.value;
+ const filtered=artifacts.filter(a=>(a.name.toLowerCase().includes(q)||a.description.toLowerCase().includes(q))&&(cat==="all"||a.category===cat));
+ grid.innerHTML=filtered.map(a=>`<article class="card"><div class="art" aria-hidden="true">${a.emoji}</div><div class="card-content"><div class="tag">${a.category.toUpperCase()} · #${String(a.id).padStart(3,"0")}</div><h3>${a.name}</h3><div class="muted" style="font-size:13px;line-height:1.5">${a.description}</div><div class="price-row"><span class="price">${a.price}</span><button data-details="${a.id}">View details</button></div></div></article>`).join("");
+ if(!filtered.length)grid.innerHTML='<p class="muted">No artifacts found. Try another search.</p>';
+}
+function toast(message){const t=document.getElementById("toast");t.textContent=message;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3500)}
+search.addEventListener("input",render);category.addEventListener("change",render);render();
+grid.addEventListener("click",e=>{const b=e.target.closest("[data-details]");if(!b)return;const a=artifacts.find(x=>x.id===Number(b.dataset.details));document.getElementById("modalArt").textContent=a.emoji;document.getElementById("modalTitle").textContent=a.name;document.getElementById("modalDescription").textContent=a.description;document.getElementById("modalPrice").textContent=a.price;document.getElementById("modal").classList.add("open")});
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+document.getElementById("closeModal").addEventListener("click",closeModal);document.getElementById("modalOk").addEventListener("click",closeModal);
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+let rotating=true;const cube=document.getElementById("cube");
+document.getElementById("rotateBtn").addEventListener("click",()=>{rotating=!rotating;cube.style.animationPlayState=rotating?"running":"paused";document.getElementById("rotateBtn").textContent=rotating?"Pause 3D Rotation":"Resume 3D Rotation"});
+document.getElementById("resetBtn").addEventListener("click",()=>{cube.style.animation="none";void cube.offsetWidth;cube.style.animation="spin 18s linear infinite";cube.style.animationPlayState=rotating?"running":"paused"});
+document.getElementById("walletBtn").addEventListener("click",async()=>{
+ if(!window.ethereum){toast("MetaMask not detected. Install the official wallet extension to test wallet connection.");return}
+ try{const accounts=await window.ethereum.request({method:"eth_requestAccounts"});document.getElementById("walletBtn").textContent=accounts[0].slice(0,6)+"..."+accounts[0].slice(-4);toast("Wallet connected for this demo. No transaction was made.")}
+ catch(err){toast(err.code===4001?"Wallet connection was cancelled.":"Could not connect wallet. Please try again.")}
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
