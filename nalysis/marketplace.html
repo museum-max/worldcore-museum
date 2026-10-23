@@ -1,3 +1,9 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORLCORE MUSEUM | 3D NFT Gallery</title>
+<style>
 from pathlib import Path
 import os, zipfile
 
@@ -292,3 +298,6 @@ with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for filename in filenames:
             z.write(os.path.join(root, filename), os.path.relpath(os.path.join(root, filename), base))
 print("Marketplace ZIP created:", zip_path, "size:", os.path.getsize(zip_path))
+</script>
+</body>
+</html>
